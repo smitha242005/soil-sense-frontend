@@ -155,9 +155,9 @@
 
   <div class="about-section">
     <h2>About SoilSense</h2>
-    <p>SoilSense is an AI-powered platform designed for farmers, agronomists, gardeners, and researchers who need fast, reliable soil moisture insights without expensive IoT sensors. Built using a Kaggle-sourced dataset of soil images across multiple moisture conditions, our model is trained to classify soil into Dry, Moderate, and Wet categories — helping you make smarter irrigation decisions that conserve water and improve crop yield.</p>
+    <p>SoilSense is an AI-powered platform designed for farmers, agronomists, gardeners, and researchers who need fast, reliable soil moisture insights without expensive IoT sensors. Built using a dataset of soil images across multiple moisture conditions, our model is trained to classify soil into Dry, Moderate, and Wet categories — helping you make smarter irrigation decisions that conserve water and improve crop yield.</p>
     <br>
-    <p style="opacity:0.6; font-size:0.85rem; margin-top:1rem"> Dataset: Soil Moisture Classification Dataset — Kaggle &nbsp;|&nbsp; 🔗 kaggle.com/datasets/zubairhossain/soil-moisture-prediction-dataset</p>
+    <p style="opacity:0.6; font-size:0.85rem; margin-top:1rem">Dataset: Soil Image Dataset for Moisture Classification — Mendeley Data &nbsp;|&nbsp; 🔗 <a href="https://data.mendeley.com/datasets/skcc44yvvg/2" target="_blank" style="color:rgba(255,255,255,0.7);">data.mendeley.com/datasets/skcc44yvvg/2</a></p>
   </div>
 
   <footer>
@@ -173,7 +173,6 @@
   </div>
 
   <div class="analysis-layout">
-    <!-- LEFT: Upload -->
     <div>
       <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()"
         ondragover="event.preventDefault(); this.classList.add('drag-over')"
@@ -210,27 +209,21 @@
       </div>
     </div>
 
-    <!-- RIGHT: Results -->
     <div class="result-panel">
       <h3>Analysis Results</h3>
-
       <div class="placeholder-state" id="result-placeholder">
         <div class="ph-icon">📊</div>
         <p>Upload a soil image and click<br><strong>Analyse Image</strong> to see results here</p>
       </div>
-
       <div class="loading-state" id="loading-state">
         <div class="spinner"></div>
         <p style="color:var(--text-light); font-size:0.9rem">Analysing soil moisture...<br>This takes just a moment</p>
       </div>
-
       <div class="result-content" id="result-content">
         <div style="margin-bottom:1.2rem">
           <img id="result-thumb" style="width:100%; height:160px; object-fit:cover; border-radius:var(--radius-sm)" src="" alt="">
         </div>
-
         <div class="moisture-badge" id="moisture-badge">🌵 Dry</div>
-
         <div class="result-metric">
           <span class="metric-label">Predicted Moisture Level</span>
           <span class="metric-value" id="res-level">—</span>
@@ -246,12 +239,10 @@
         <div class="confidence-bar">
           <div class="confidence-fill" id="conf-fill" style="width:0%"></div>
         </div>
-
         <div class="recommendation-box" id="rec-box">
           <div class="rec-title" id="rec-title">—</div>
           <div class="rec-text" id="rec-text">—</div>
         </div>
-
         <button class="btn-upload btn-upload-fill" style="width:100%;margin-top:1.2rem;border-radius:12px" onclick="clearImage()">Analyse Another Image</button>
       </div>
     </div>
@@ -300,12 +291,12 @@
 </div>
 
 <script src="js/storage.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/router.js"></script>
-  <script src="js/soil-data.js"></script>
-  <script src="js/soil-guide.js"></script>
-  <script src="js/analysis.js"></script>
-  <script src="js/main.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/router.js"></script>
+<script src="js/soil-data.js"></script>
+<script src="js/soil-guide.js"></script>
+<script src="js/analysis.js"></script>
+<script src="js/main.js"></script>
 
 </body>
 </html>
