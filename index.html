@@ -3,10 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SoilSense – Smart Soil Moisture Estimator</title>
-
+  <title>SoilSense – Smart Soil Type Analyser</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/auth.css">
   <link rel="stylesheet" href="css/home.css">
@@ -15,7 +13,8 @@
   <link rel="stylesheet" href="css/media.css">
 </head>
 <body>
-    <nav id="main-nav">
+
+<nav id="main-nav">
   <div class="nav-logo" onclick="showPage('home')">
     <span>🌱</span> SoilSense
   </div>
@@ -37,13 +36,12 @@
     <div class="auth-brand">
       <div class="logo-icon">🌱</div>
       <h1>SoilSense</h1>
-      <p>Smart Soil Moisture Intelligence Platform</p>
+      <p>Smart Soil Type Intelligence Platform</p>
     </div>
     <div class="auth-tabs">
       <button class="auth-tab active" onclick="switchTab('login')">Sign In</button>
       <button class="auth-tab" onclick="switchTab('register')">Create Account</button>
     </div>
-
     <!-- LOGIN FORM -->
     <div class="auth-form active" id="login-form">
       <div class="form-group">
@@ -57,7 +55,6 @@
       <button class="btn-primary" onclick="doLogin()">Sign In to SoilSense</button>
       <div class="auth-msg" id="login-msg"></div>
     </div>
-
     <!-- REGISTER FORM -->
     <div class="auth-form" id="register-form">
       <div class="form-group">
@@ -82,8 +79,8 @@
 <div class="page" id="home-page">
   <div class="hero">
     <div class="hero-badge">🛰️ AI-Powered Soil Analysis</div>
-    <h1>Understand Your Soil<br><em>Save Water. Grow More.</em></h1>
-    <p>Upload a photo of your soil and get instant AI-powered moisture analysis, irrigation recommendations, and confidence scores — in seconds.</p>
+    <h1>Identify Your Soil Type<br><em>Grow Smarter. Farm Better.</em></h1>
+    <p>Upload a photo of your soil and get instant AI-powered soil type identification, crop recommendations, moisture guidance — in seconds.</p>
     <div class="hero-cta">
       <button class="btn-hero-primary" onclick="showPage('analysis')">Analyse Soil Now →</button>
       <button class="btn-hero-secondary" onclick="showPage('guide')">Explore Soil Types</button>
@@ -91,35 +88,35 @@
   </div>
 
   <div class="stats-bar">
-    <div class="stat-item"><div class="num">95%+</div><div class="lbl">Model Accuracy</div></div>
-    <div class="stat-item"><div class="num">3</div><div class="lbl">Moisture Levels</div></div>
-    <div class="stat-item"><div class="num">8</div><div class="lbl">Soil Types Covered</div></div>
+    <div class="stat-item"><div class="num">94%+</div><div class="lbl">Model Accuracy</div></div>
+    <div class="stat-item"><div class="num">10</div><div class="lbl">Soil Types</div></div>
+    <div class="stat-item"><div class="num">6,773</div><div class="lbl">Training Images</div></div>
     <div class="stat-item"><div class="num">< 3s</div><div class="lbl">Analysis Time</div></div>
   </div>
 
   <div class="section">
     <div class="section-title">What SoilSense Does</div>
-    <div class="section-sub">Everything you need to make smarter irrigation decisions</div>
+    <div class="section-sub">Everything you need to make smarter farming decisions</div>
     <div class="features-grid">
       <div class="feature-card">
         <div class="feature-icon" style="background:#FFF3E0">📸</div>
         <h3>Image Upload Analysis</h3>
-        <p>Upload any soil photo — taken fresh or from your camera roll. Our AI analyses texture, colour, and moisture cues instantly.</p>
+        <p>Upload any soil photo — taken fresh or from your camera roll. Our AI analyses texture, colour, and pattern instantly.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon" style="background:#E8F5E9">🧠</div>
-        <h3>AI Moisture Prediction</h3>
-        <p>Get a predicted moisture level (Dry / Moderate / Wet), estimated percentage, and confidence score from our trained model.</p>
+        <h3>AI Soil Type Detection</h3>
+        <p>Get the predicted soil type with confidence score from our ResNet50 model trained on 6,773 real soil images.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon" style="background:#E3F2FD">💧</div>
-        <h3>Irrigation Recommendations</h3>
-        <p>Receive clear, actionable advice: irrigate now, monitor, or hold off — based on your soil's specific moisture state.</p>
+        <h3>Moisture & Crop Guidance</h3>
+        <p>Receive ideal moisture levels and crop recommendations specifically tailored for your identified soil type.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon" style="background:#F3E5F5">📚</div>
         <h3>Soil Knowledge Guide</h3>
-        <p>Browse 8 common soil types with ideal moisture ranges, care tips, and agricultural guidance — all in one place.</p>
+        <p>Browse 10 soil types with characteristics, ideal moisture ranges, care tips and agricultural guidance.</p>
       </div>
     </div>
   </div>
@@ -137,17 +134,17 @@
         <div class="how-step">
           <div class="step-num">2</div>
           <h4>AI Processes</h4>
-          <p>Our trained model analyses colour, texture, and moisture cues</p>
+          <p>Our ResNet50 model analyses colour, texture and pattern</p>
         </div>
         <div class="how-step">
           <div class="step-num">3</div>
           <h4>Get Results</h4>
-          <p>See moisture level, percentage estimate, and model confidence</p>
+          <p>See soil type, moisture guidance and crop recommendations</p>
         </div>
         <div class="how-step">
           <div class="step-num">4</div>
           <h4>Take Action</h4>
-          <p>Follow the irrigation recommendation for your field</p>
+          <p>Follow the recommendations for your specific soil type</p>
         </div>
       </div>
     </div>
@@ -155,60 +152,68 @@
 
   <div class="about-section">
     <h2>About SoilSense</h2>
-    <p>SoilSense is an AI-powered platform designed for farmers, agronomists, gardeners, and researchers who need fast, reliable soil moisture insights without expensive IoT sensors. Built using a dataset of soil images across multiple moisture conditions, our model is trained to classify soil into Dry, Moderate, and Wet categories — helping you make smarter irrigation decisions that conserve water and improve crop yield.</p>
+    <p>SoilSense is an AI-powered platform designed for farmers, agronomists, gardeners, and researchers who need fast, reliable soil type identification. Built using a combined dataset of 6,773 soil images across 10 soil types, our ResNet50 model achieves 94.83% accuracy — helping you make smarter farming decisions that improve crop yield and soil management.</p>
     <br>
-    <p style="opacity:0.6; font-size:0.85rem; margin-top:1rem">Dataset: Soil Image Dataset for Moisture Classification — Mendeley Data &nbsp;|&nbsp; 🔗 <a href="https://data.mendeley.com/datasets/skcc44yvvg/2" target="_blank" style="color:rgba(255,255,255,0.7);">data.mendeley.com/datasets/skcc44yvvg/2</a></p>
+    <p style="opacity:0.6;font-size:0.85rem;margin-top:1rem">
+      Datasets: Indian Region Soil Image Dataset · Comprehensive Soil Classification Datasets · Soil Image Dataset (Jayaprakash) · Loam Soil Dataset
+    </p>
   </div>
 
   <footer>
-    Made with 🌱 by <strong>SoilSense</strong> | AI-Powered Soil Moisture Intelligence
+    Made with 🌱 by <strong>SoilSense</strong> | AI-Powered Soil Type Intelligence
   </footer>
 </div>
 
 <!-- ══════════ ANALYSIS PAGE ══════════ -->
 <div class="page" id="analysis-page">
   <div class="page-header">
-    <h1>🔬 Soil Moisture Analysis</h1>
-    <p>Upload a soil image to get AI-powered moisture predictions and irrigation advice</p>
+    <h1>🔬 Soil Type Analysis</h1>
+    <p>Upload a soil image to get AI-powered soil type identification and crop recommendations</p>
   </div>
 
   <div class="analysis-layout">
+    <!-- LEFT: Upload -->
     <div>
-      <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()"
+      <div class="upload-zone" id="upload-zone"
+        onclick="document.getElementById('file-input').click()"
         ondragover="event.preventDefault(); this.classList.add('drag-over')"
         ondragleave="this.classList.remove('drag-over')"
         ondrop="handleDrop(event)">
         <div id="upload-placeholder">
-          <div class="upload-icon"></div>
+          <div class="upload-icon">🌍</div>
           <h3>Drop your soil image here</h3>
           <p>or click to browse from your device</p>
           <div class="upload-actions" onclick="event.stopPropagation()">
-            <button class="btn-upload btn-upload-fill" onclick="document.getElementById('file-input').click()">📁 Choose File</button>
-            <button class="btn-upload btn-upload-outline" onclick="useSampleImage()"> Try Sample</button>
+            <button class="btn-upload btn-upload-fill"
+              onclick="document.getElementById('file-input').click()">📁 Choose File</button>
+            <button class="btn-upload btn-upload-outline"
+              onclick="useSampleImage()">🌱 Try Sample</button>
           </div>
-          <p style="margin-top:1rem; font-size:0.78rem; color:var(--text-light)">Supports JPG, PNG, WEBP · Max 10MB</p>
+          <p style="margin-top:1rem;font-size:0.78rem;color:var(--text-light)">Supports JPG, PNG, WEBP · Max 10MB</p>
         </div>
-        <div id="upload-preview" style="display:none; width:100%">
+        <div id="upload-preview" style="display:none;width:100%">
           <img id="preview-img" class="preview-img" src="" alt="Soil preview">
           <div class="img-actions" onclick="event.stopPropagation()">
-            <button class="btn-sm btn-analyze" onclick="runAnalysis()"> Analyse Image</button>
+            <button class="btn-sm btn-analyze" onclick="runAnalysis()">🔬 Analyse Image</button>
             <button class="btn-sm btn-clear" onclick="clearImage()">✕ Clear</button>
           </div>
         </div>
         <input type="file" id="file-input" accept="image/*" onchange="handleFileSelect(event)">
       </div>
 
-      <div style="margin-top:1.5rem; background:white; border-radius:var(--radius); padding:1.5rem; border:1.5px solid rgba(160,82,45,0.1)">
-        <h4 style="font-size:0.9rem; color:var(--soil-dark); margin-bottom:0.8rem">📋 Tips for Better Results</h4>
-        <ul style="list-style:none; font-size:0.83rem; color:var(--text-light); line-height:2">
+      <div style="margin-top:1.5rem;background:white;border-radius:var(--radius);padding:1.5rem;border:1.5px solid rgba(160,82,45,0.1)">
+        <h4 style="font-size:0.9rem;color:var(--soil-dark);margin-bottom:0.8rem">📋 Tips for Better Results</h4>
+        <ul style="list-style:none;font-size:0.83rem;color:var(--text-light);line-height:2">
           <li>✔ Take photos in natural daylight</li>
           <li>✔ Fill the frame with soil — avoid grass/plants</li>
           <li>✔ Use a top-down angle for best accuracy</li>
           <li>✔ Avoid flash as it distorts soil colour</li>
+          <li>✔ Use close-up shots to capture soil texture</li>
         </ul>
       </div>
     </div>
 
+    <!-- RIGHT: Results -->
     <div class="result-panel">
       <h3>Analysis Results</h3>
       <div class="placeholder-state" id="result-placeholder">
@@ -217,21 +222,20 @@
       </div>
       <div class="loading-state" id="loading-state">
         <div class="spinner"></div>
-        <p style="color:var(--text-light); font-size:0.9rem">Analysing soil moisture...<br>This takes just a moment</p>
+        <p style="color:var(--text-light);font-size:0.9rem">Analysing soil type...<br>This takes just a moment</p>
       </div>
       <div class="result-content" id="result-content">
+        <!-- Thumbnail -->
         <div style="margin-bottom:1.2rem">
-          <img id="result-thumb" style="width:100%; height:160px; object-fit:cover; border-radius:var(--radius-sm)" src="" alt="">
+          <img id="result-thumb"
+            style="width:100%;height:160px;object-fit:cover;border-radius:var(--radius-sm)"
+            src="" alt="">
         </div>
-        <div class="moisture-badge" id="moisture-badge">🌵 Dry</div>
-        <div class="result-metric">
-          <span class="metric-label">Predicted Moisture Level</span>
-          <span class="metric-value" id="res-level">—</span>
-        </div>
-        <div class="result-metric">
-          <span class="metric-label">Estimated Moisture %</span>
-          <span class="metric-value" id="res-percent">—</span>
-        </div>
+
+        <!-- Soil Type Badge -->
+        <div class="soil-type-badge" id="res-soil-type">🌱 Soil Type</div>
+
+        <!-- Confidence -->
         <div class="result-metric">
           <span class="metric-label">Model Confidence</span>
           <span class="metric-value" id="res-confidence">—</span>
@@ -239,11 +243,37 @@
         <div class="confidence-bar">
           <div class="confidence-fill" id="conf-fill" style="width:0%"></div>
         </div>
-        <div class="recommendation-box" id="rec-box">
-          <div class="rec-title" id="rec-title">—</div>
-          <div class="rec-text" id="rec-text">—</div>
+
+        <!-- Moisture & Location -->
+        <div class="result-metric" style="margin-top:8px">
+          <span class="metric-label">💧 Ideal Moisture Level</span>
+          <span class="metric-value" id="res-moisture">—</span>
         </div>
-        <button class="btn-upload btn-upload-fill" style="width:100%;margin-top:1.2rem;border-radius:12px" onclick="clearImage()">Analyse Another Image</button>
+        <div class="result-metric">
+          <span class="metric-label">📍 Found In</span>
+          <span class="metric-value" id="res-found"
+            style="font-size:0.82rem;text-align:right;max-width:60%">—</span>
+        </div>
+
+        <!-- Soil Info Box -->
+        <div class="soil-info-box">
+          <h4>📝 About This Soil</h4>
+          <p id="res-description">—</p>
+          <h4>🔬 Characteristics</h4>
+          <p id="res-characteristics" style="margin-bottom:0.8rem">—</p>
+          <h4>🌾 Recommended Crops</h4>
+          <div class="crops-list" id="res-crops"></div>
+        </div>
+
+        <!-- Top 3 Predictions -->
+        <div class="top3-section">
+          <h4>Top 3 Predictions</h4>
+          <div id="res-top3"></div>
+        </div>
+
+        <button class="btn-upload btn-upload-fill"
+          style="width:100%;margin-top:1.2rem;border-radius:12px"
+          onclick="clearImage()">🔄 Analyse Another Image</button>
       </div>
     </div>
   </div>
@@ -253,7 +283,7 @@
 <div class="page" id="guide-page">
   <div class="guide-header">
     <h1 style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--soil-dark)">📚 Soil Type Guide</h1>
-    <p style="color:var(--text-light);margin-top:4px">Click any soil card to learn about its ideal moisture levels and care requirements</p>
+    <p style="color:var(--text-light);margin-top:4px">Click any soil card to learn about its ideal moisture levels and crop recommendations</p>
   </div>
   <div class="soil-grid" id="soil-grid"></div>
 </div>
@@ -283,7 +313,8 @@
       <h3>Key Characteristics</h3>
       <ul class="info-list" id="detail-list"></ul>
     </div>
-    <div id="detail-irrigation" style="background:var(--wet-light);border-radius:var(--radius);padding:1.5rem;margin-top:1.5rem">
+    <div id="detail-irrigation"
+      style="background:var(--wet-light);border-radius:var(--radius);padding:1.5rem;margin-top:1.5rem">
       <h3 style="font-size:1rem;color:var(--wet-blue);margin-bottom:0.5rem">💧 Irrigation Guide</h3>
       <p id="detail-irr-text" style="font-size:0.9rem;color:var(--text-mid);line-height:1.7"></p>
     </div>

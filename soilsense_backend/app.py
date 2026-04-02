@@ -1,158 +1,186 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import tensorflow as tf
 import numpy as np
-import json
-import os
-import base64
-import io
+from PIL import Image
+import io, json, base64, os
 
 app = Flask(__name__)
+CORS(app)
 
-# ── Allow your frontend website to call this backend ──────────
-CORS(app, resources={r"/*": {"origins": "*"}})
+print("Loading model...")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# ── Load model only once at startup ───────────────────────────
-model = None
-index_to_class = {}
+keras_path = os.path.join(BASE_DIR, 'best_model.keras')
+h5_path = os.path.join(BASE_DIR, 'best_model.h5')
 
-def load_model():
-    global model, index_to_class
-    try:
-        import tensorflow as tf
-        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if os.path.exists(keras_path):
+    model = tf.keras.models.load_model(keras_path)
+elif os.path.exists(h5_path):
+    model = tf.keras.models.load_model(h5_path, compile=False)
+else:
+    raise FileNotFoundError("No model file found!")
 
-        model_path = os.path.join(BASE_DIR, 'best_model.h5')
-        class_path = os.path.join(BASE_DIR, 'class_indices.json')
+print("✅ Model loaded!")
 
-        if not os.path.exists(model_path):
-            print("⚠️  best_model.h5 not found — running in simulation mode")
-            return False
+with open(os.path.join(BASE_DIR, 'class_indices.json')) as f:
+    class_indices = json.load(f)
+idx_to_label = {v: k for k, v in class_indices.items()}
+print("Classes:", idx_to_label)
 
-        print("Loading model from:", model_path)
-        model = tf.keras.models.load_model(model_path)
+IMG_SIZE = (224, 224)
+from tensorflow.keras.applications.resnet50 import preprocess_input
 
-        with open(class_path, 'r') as f:
-            class_indices = json.load(f)
+# ── Soil Info Dictionary ──
+SOIL_INFO = {
+    'Alluvial_Soil': {
+        'display_name': 'Alluvial Soil',
+        'description': 'Highly fertile soil deposited by rivers. Rich in minerals, nutrients and organic matter. Found mainly in river plains and deltas.',
+        'moisture_level': 'Moderate (40-60%)',
+        'ideal_moisture': 50,
+        'crops': ['Rice', 'Wheat', 'Sugarcane', 'Cotton', 'Jute', 'Maize'],
+        'characteristics': 'Light to medium texture, high fertility, good water retention',
+        'found_in': 'River plains, Indo-Gangetic plain, coastal deltas'
+    },
+    'Black_Soil': {
+        'display_name': 'Black Soil',
+        'description': 'Dark clay soil also known as Black Cotton Soil or Regur. High water retention and rich in calcium, magnesium and iron.',
+        'moisture_level': 'Low-Moderate (30-50%)',
+        'ideal_moisture': 40,
+        'crops': ['Cotton', 'Soybean', 'Wheat', 'Jowar', 'Sunflower', 'Tobacco'],
+        'characteristics': 'High clay content, swells when wet, cracks when dry',
+        'found_in': 'Deccan plateau, Maharashtra, Gujarat, Madhya Pradesh'
+    },
+    'Red_Soil': {
+        'display_name': 'Red Soil',
+        'description': 'Iron-rich reddish colored soil. Well drained but generally low in nutrients and organic matter.',
+        'moisture_level': 'Low (20-40%)',
+        'ideal_moisture': 30,
+        'crops': ['Groundnut', 'Tobacco', 'Millets', 'Potato', 'Rice', 'Wheat'],
+        'characteristics': 'Good drainage, low water retention, needs fertilizers',
+        'found_in': 'Eastern and southern Deccan plateau, Tamil Nadu, Odisha'
+    },
+    'Clay': {
+        'display_name': 'Clay Soil',
+        'description': 'Heavy soil with very fine particles. Excellent nutrient content but poor drainage. Sticky when wet and hard when dry.',
+        'moisture_level': 'High (50-70%)',
+        'ideal_moisture': 60,
+        'crops': ['Rice', 'Lettuce', 'Cabbage', 'Broccoli', 'Chard', 'Beans'],
+        'characteristics': 'High nutrient content, poor drainage, slow to warm up',
+        'found_in': 'River valleys, flood plains, low-lying areas'
+    },
+    'Laterite_Soil': {
+        'display_name': 'Laterite Soil',
+        'description': 'Formed in tropical regions with high rainfall. Rich in iron and aluminum oxides. Soft when wet, hard when dry.',
+        'moisture_level': 'Moderate (35-55%)',
+        'ideal_moisture': 45,
+        'crops': ['Tea', 'Coffee', 'Cashew', 'Coconut', 'Rubber', 'Pineapple'],
+        'characteristics': 'Low fertility, acidic, needs heavy fertilization',
+        'found_in': 'Karnataka, Kerala, Tamil Nadu, Assam, Meghalaya'
+    },
+    'Loam_Soil': {
+        'display_name': 'Loam Soil',
+        'description': 'Ideal mix of sand, silt and clay. Best soil for farming with excellent drainage and water retention balance.',
+        'moisture_level': 'Moderate (40-60%)',
+        'ideal_moisture': 50,
+        'crops': ['Almost all crops', 'Wheat', 'Corn', 'Vegetables', 'Fruits', 'Flowers'],
+        'characteristics': 'Best soil for agriculture, balanced texture, high fertility',
+        'found_in': 'Agricultural plains, temperate regions worldwide'
+    },
+    'Arid_Soil': {
+        'display_name': 'Arid Soil',
+        'description': 'Dry desert soil with very low organic matter and high salt content. Found in arid and semi-arid regions.',
+        'moisture_level': 'Very Low (10-25%)',
+        'ideal_moisture': 18,
+        'crops': ['Millets', 'Barley', 'Cotton', 'Dates', 'Drought-resistant crops'],
+        'characteristics': 'Sandy texture, low fertility, needs heavy irrigation',
+        'found_in': 'Rajasthan, Gujarat desert regions, arid zones'
+    },
+    'Mountain_Soil': {
+        'display_name': 'Mountain Soil',
+        'description': 'Found in hilly and mountainous areas. Acidic in nature and rich in organic matter but shallow depth.',
+        'moisture_level': 'High (50-70%)',
+        'ideal_moisture': 60,
+        'crops': ['Tea', 'Coffee', 'Fruits', 'Potatoes', 'Medicinal plants', 'Spices'],
+        'characteristics': 'Acidic, rich in humus, shallow, prone to erosion',
+        'found_in': 'Himalayas, Western Ghats, Northeastern hills'
+    },
+    'Yellow_Soil': {
+        'display_name': 'Yellow Soil',
+        'description': 'Yellow colored due to iron oxidation in hydrated form. Found in humid regions with moderate rainfall.',
+        'moisture_level': 'Moderate (35-55%)',
+        'ideal_moisture': 45,
+        'crops': ['Rice', 'Sweet Potato', 'Corn', 'Tobacco', 'Groundnut'],
+        'characteristics': 'Moderate fertility, good drainage, needs organic matter',
+        'found_in': 'Humid subtropical regions, parts of South and East India'
+    },
+    'Cinder_Soil': {
+        'display_name': 'Cinder Soil',
+        'description': 'Volcanic origin soil with excellent drainage. Rich in minerals but low in organic matter.',
+        'moisture_level': 'Low-Moderate (25-45%)',
+        'ideal_moisture': 35,
+        'crops': ['Grapes', 'Olives', 'Lavender', 'Herbs', 'Succulents', 'Cacti'],
+        'characteristics': 'Excellent drainage, high mineral content, low water retention',
+        'found_in': 'Volcanic regions, parts of Deccan plateau'
+    }
+}
 
-        # Flip: {"dry":0,"moderate":1,"wet":2} → {0:"dry",1:"moderate",2:"wet"}
-        index_to_class = {v: k for k, v in class_indices.items()}
-        print("✅ Model loaded. Classes:", index_to_class)
-        return True
-
-    except Exception as e:
-        print("❌ Model load failed:", e)
-        return False
-
-model_loaded = load_model()
-
-# ── Recommendation logic ───────────────────────────────────────
-def get_recommendation(label, confidence):
-    label_lower = label.lower()
-    conf = float(confidence)
-
-    if label_lower == 'dry':
-        pct = int(10 + (100 - conf) * 0.2)
-        return {
-            "level": "Dry",
-            "emoji": "🏜️",
-            "moisture_percent": max(5, min(pct, 30)),
-            "rec_type": "warn",
-            "rec_title": "⚠️ Irrigation Required",
-            "rec_text": "The soil is too dry. Water the field immediately to prevent crop stress and root damage."
-        }
-    elif label_lower == 'moderate':
-        pct = int(35 + (conf - 50) * 0.3)
-        return {
-            "level": "Moderate",
-            "emoji": "🌿",
-            "moisture_percent": max(30, min(pct, 60)),
-            "rec_type": "monitor",
-            "rec_title": "🔵 Monitor Soil",
-            "rec_text": "Soil moisture is at an acceptable level. Monitor again in 2 hours and irrigate if it drops below 30%."
-        }
-    else:  # wet
-        pct = int(60 + (conf - 50) * 0.4)
-        return {
-            "level": "Wet",
-            "emoji": "💧",
-            "moisture_percent": max(55, min(pct, 95)),
-            "rec_type": "ok",
-            "rec_title": "✅ No Irrigation Needed",
-            "rec_text": "The soil has sufficient moisture. No irrigation required. Ensure proper drainage to avoid waterlogging."
-        }
-
-# ── /predict endpoint ──────────────────────────────────────────
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
         data = request.get_json()
-
         if not data or 'image' not in data:
             return jsonify({'error': 'No image provided'}), 400
 
-        image_data = data['image']
-        if ',' in image_data:
-            image_data = image_data.split(',')[1]
+        img_data = data['image']
+        if ',' in img_data:
+            img_data = img_data.split(',')[1]
 
-        if not model_loaded or model is None:
-            import random
-            options = ['dry', 'moderate', 'wet']
-            label = random.choice(options)
-            confidence = round(random.uniform(78, 95), 1)
-            rec = get_recommendation(label, confidence)
-            return jsonify({
-                "success": True,
-                "predicted_class": label.capitalize(),
-                "confidence": confidence,
-                "mode": "simulation",
-                **rec
-            })
+        img_bytes = base64.b64decode(img_data)
+        img = Image.open(io.BytesIO(img_bytes)).convert('RGB')
+        img = img.resize(IMG_SIZE)
 
-        import tensorflow as tf
-        from PIL import Image
+        arr = np.array(img, dtype=np.float32)
+        arr = preprocess_input(arr)
+        arr = np.expand_dims(arr, axis=0)
 
-        image_bytes = base64.b64decode(image_data)
-        img = Image.open(io.BytesIO(image_bytes)).convert('RGB')
-        img = img.resize((224, 224))
+        preds = model.predict(arr)[0]
+        pred_idx = int(np.argmax(preds))
+        pred_label = idx_to_label[pred_idx]
+        confidence = float(preds[pred_idx]) * 100
 
-        img_array = np.array(img, dtype=np.float32)
-        img_array = tf.keras.applications.mobilenet_v2.preprocess_input(img_array)
-        img_array = np.expand_dims(img_array, axis=0)
+        soil = SOIL_INFO.get(pred_label, {})
 
-        predictions = model.predict(img_array)
-        class_idx = int(np.argmax(predictions[0]))
-        confidence = round(float(np.max(predictions[0])) * 100, 1)
-
-        label = index_to_class.get(class_idx, 'moderate')
-        rec = get_recommendation(label, confidence)
+        # Top 3 predictions
+        top3_idx = np.argsort(preds)[::-1][:3]
+        top3 = [
+            {
+                'soil': SOIL_INFO.get(idx_to_label[int(i)], {}).get('display_name', idx_to_label[int(i)]),
+                'confidence': round(float(preds[i]) * 100, 1)
+            }
+            for i in top3_idx
+        ]
 
         return jsonify({
-            "success": True,
-            "predicted_class": label.capitalize(),
-            "confidence": confidence,
-            "all_predictions": {
-                index_to_class.get(i, str(i)): round(float(p) * 100, 1)
-                for i, p in enumerate(predictions[0])
-            },
-            **rec
+            'success': True,
+            'soil_type': pred_label,
+            'display_name': soil.get('display_name', pred_label),
+            'confidence': round(confidence, 1),
+            'description': soil.get('description', ''),
+            'moisture_level': soil.get('moisture_level', ''),
+            'ideal_moisture': soil.get('ideal_moisture', 0),
+            'crops': soil.get('crops', []),
+            'characteristics': soil.get('characteristics', ''),
+            'found_in': soil.get('found_in', ''),
+            'top3': top3
         })
 
     except Exception as e:
-        print("Prediction error:", e)
         return jsonify({'error': str(e)}), 500
-
 
 @app.route('/health', methods=['GET'])
 def health():
-    return jsonify({
-        'status': 'SoilSense backend is running ✅',
-        'model_loaded': model_loaded,
-        'classes': index_to_class
-    })
-
-@app.route('/', methods=['GET'])
-def home():
-    return jsonify({'message': 'SoilSense API is live 🌱', 'model_ready': model_loaded})
+    return jsonify({'status': 'ok', 'model': 'ResNet50', 'classes': len(idx_to_label)})
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))

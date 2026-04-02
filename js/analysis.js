@@ -57,7 +57,6 @@ function clearImage() {
   document.getElementById('loading-state').classList.remove('show');
 }
 
-// AI ANALYSIS via SoilSense Backend API
 const BACKEND_URL = 'https://soilsense-backend-api.onrender.com';
 
 async function runAnalysis() {
@@ -78,55 +77,69 @@ async function runAnalysis() {
     const data = await response.json();
 
     if (data.success) {
-      const result = {
-        level: data.level,
-        percent: data.percent,
-        confidence: data.confidence,
-        recommendation: data.recommendation,
-        detail: data.detail,
-        recType: data.recType
-      };
-      showResult(result, imgSrc);
+      showResult(data, imgSrc);
     } else {
       throw new Error(data.error || 'Prediction failed');
     }
   } catch (err) {
     console.error('API error:', err);
-    const result = simulateResult();
-    showResult(result, imgSrc);
+    alert('Analysis failed. Please try again.');
+    document.getElementById('loading-state').classList.remove('show');
+    document.getElementById('result-placeholder').style.display = 'block';
   }
 }
 
-function simulateResult() {
-  const levels = [
-    {level:'Dry',percent:Math.floor(Math.random()*20+10),confidence:Math.floor(Math.random()*15+80),recommendation:'Water the soil immediately',detail:'The soil is critically dry. Irrigate the field as soon as possible to prevent crop wilting and stress.',recType:'warn'},
-    {level:'Moderate',percent:Math.floor(Math.random()*20+35),confidence:Math.floor(Math.random()*10+85),recommendation:'Monitor after 2 hours',detail:'Soil moisture is at an acceptable level. Check again in 2 hours and irrigate if it drops below 30%.',recType:'monitor'},
-    {level:'Wet',percent:Math.floor(Math.random()*20+60),confidence:Math.floor(Math.random()*10+88),recommendation:'No irrigation needed',detail:'The soil has sufficient moisture. No irrigation is required at this time. Ensure proper drainage.',recType:'ok'}
-  ];
-  return levels[Math.floor(Math.random()*3)];
-}
-
-function showResult(r, imgSrc) {
+function showResult(data, imgSrc) {
   document.getElementById('loading-state').classList.remove('show');
   document.getElementById('result-thumb').src = imgSrc;
-  document.getElementById('res-level').textContent = r.level;
-  document.getElementById('res-percent').textContent = r.percent + '%';
-  document.getElementById('res-confidence').textContent = r.confidence + '% confident';
-  setTimeout(() => { document.getElementById('conf-fill').style.width = r.confidence + '%'; }, 100);
 
-  const badge = document.getElementById('moisture-badge');
-  const icons = {Dry:'🌵',Moderate:'🌤️',Wet:'💧'};
-  badge.textContent = icons[r.level] + ' ' + r.level;
-  badge.className = 'moisture-badge';
-  badge.classList.add(r.level==='Dry'?'badge-dry':r.level==='Wet'?'badge-wet':'badge-moderate');
+  // ── Soil Type Badge ──
+  document.getElementById('res-soil-type').textContent =
+    '🌱 ' + data.display_name;
 
-  const rec = document.getElementById('rec-box');
-  rec.className = 'recommendation-box';
-  const classes = {warn:'rec-warn',ok:'rec-ok',monitor:'rec-monitor'};
-  rec.classList.add(classes[r.recType]||'rec-warn');
-  const emojis = {warn:'⚠️ Irrigation Required',ok:'✅ No Irrigation Needed',monitor:'🔵 Monitor Soil'};
-  document.getElementById('rec-title').textContent = emojis[r.recType]||r.recommendation;
-  document.getElementById('rec-text').textContent = r.detail;
+  // ── Metrics ──
+  document.getElementById('res-confidence').textContent =
+    data.confidence + '% confident';
+  document.getElementById('res-moisture').textContent =
+    data.moisture_level;
+  document.getElementById('res-found').textContent =
+    data.found_in;
+
+  // ── Confidence Bar ──
+  setTimeout(() => {
+    document.getElementById('conf-fill').style.width = data.confidence + '%';
+  }, 100);
+
+  // ── Description ──
+  document.getElementById('res-description').textContent = data.description;
+
+  // ── Characteristics ──
+  document.getElementById('res-characteristics').textContent =
+    data.characteristics;
+
+  // ── Crops ──
+  const cropsContainer = document.getElementById('res-crops');
+  cropsContainer.innerHTML = '';
+  data.crops.forEach(crop => {
+    const tag = document.createElement('span');
+    tag.className = 'crop-tag';
+    tag.textContent = crop;
+    cropsContainer.appendChild(tag);
+  });
+
+  // ── Top 3 Predictions ──
+  const top3Container = document.getElementById('res-top3');
+  top3Container.innerHTML = '';
+  data.top3.forEach(item => {
+    top3Container.innerHTML += `
+      <div class="top3-item">
+        <span class="top3-name">${item.soil}</span>
+        <div class="top3-bar-wrap">
+          <div class="top3-bar" style="width:${item.confidence}%"></div>
+        </div>
+        <span class="top3-conf">${item.confidence}%</span>
+      </div>`;
+  });
 
   document.getElementById('result-content').classList.add('show');
 }

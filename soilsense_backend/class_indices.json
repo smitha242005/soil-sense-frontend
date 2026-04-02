@@ -1,1 +1,1 @@
-{"dry": 0, "moderate": 1, "wet": 2}
+{"Alluvial_Soil": 0, "Arid_Soil": 1, "Black_Soil": 2, "Cinder_Soil": 3, "Clay": 4, "Laterite_Soil": 5, "Loam_Soil": 6, "Mountain_Soil": 7, "Red_Soil": 8, "Yellow_Soil": 9}

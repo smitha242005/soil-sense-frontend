@@ -1,10 +1,92 @@
 const soils = [
-  {id:'clay',name:'Clay Soil',tag:'Heavy Soil',emoji:'🟤',bg:'#8B6914',idealMin:40,idealMax:70,desc:'Clay soil has tiny, densely packed particles with very little pore space. It holds water well but can become waterlogged and compacted, making it heavy and sticky when wet.',facts:['Holds nutrients very well — good for farming','Slow draining — prone to waterlogging','Very sticky and plastic when wet','Cracks and becomes hard when dry','Warms up slowly in spring'],irr:'Clay soil should be watered deeply but infrequently. Allow the top 5–10 cm to dry out between waterings. Avoid light, frequent watering as this encourages shallow roots. Ideal watering interval is every 7–10 days in summer.',crops:'Rice, wheat, sugarcane, cotton'},
-  {id:'sandy',name:'Sandy Soil',tag:'Light Soil',emoji:'🟡',bg:'#C8A850',idealMin:15,idealMax:35,desc:'Sandy soil has large particles with lots of pore space, allowing water and air to move through quickly. It drains fast and warms up rapidly in spring, but is prone to drought.',facts:['Drains very quickly — low water retention','Warms up fast in spring','Low in nutrients — leaches easily','Easy to cultivate and work with','Well aerated — good for root crops'],irr:'Sandy soil needs frequent, light irrigation because it cannot hold much water. Water every 2–3 days in hot weather. Use drip irrigation or soaker hoses for efficiency. Mulching helps reduce evaporation significantly.',crops:'Carrots, potatoes, peanuts, watermelon'},
-  {id:'loam',name:'Loam Soil',tag:'Ideal Soil',emoji:'🟫',bg:'#7B5E3A',idealMin:30,idealMax:55,desc:'Loam soil is the ideal growing medium — a balanced mix of sand, silt, and clay. It retains enough moisture for plant roots while draining excess water, and is rich in organic matter.',facts:['Best balance of drainage and moisture retention','Rich in nutrients and organic matter','Easy to work with — not too sticky or loose','Great aeration for root development','Supports a wide variety of crops'],irr:'Loam is the easiest soil to manage. Water when the top 2–3 cm is dry. Typical watering intervals are every 4–6 days. Deep, infrequent watering encourages deep root systems. Loam rarely needs special treatment.',crops:'Vegetables, fruits, grains, flowers'},
-  {id:'silt',name:'Silt Soil',tag:'Fine Soil',emoji:'⬜',bg:'#A8A090',idealMin:35,idealMax:60,desc:'Silt soil has medium-sized particles, between sand and clay. It is smooth and floury when dry and slippery when wet. It holds moisture well and is quite fertile but compacts easily.',facts:['Smooth, slippery texture when wet','Good water-retention ability','Fertile — high nutrient holding capacity','Prone to compaction and crusting','Susceptible to erosion by water and wind'],irr:'Silt retains moisture moderately well. Water deeply every 5–7 days. Avoid overhead watering which can cause surface crusting. Use mulch to prevent evaporation and protect the surface structure.',crops:'Wheat, maize, soybean, vegetables'},
-  {id:'peaty',name:'Peaty Soil',tag:'Organic Soil',emoji:'🟩',bg:'#3B6B3B',idealMin:55,idealMax:85,desc:'Peaty soil is dark, spongy, and very high in organic matter (peat). It has exceptional moisture retention and is slightly acidic. Naturally found in bogs and marshes, it requires careful management.',facts:['Extremely high organic matter content','Holds large amounts of water — can become waterlogged','Naturally acidic (pH 3.5–5.5)','Rich in carbon but low in nutrients','Can be improved by adding lime and fertilisers'],irr:'Peaty soil holds a lot of water and rarely needs irrigation. In dry seasons, water lightly every 7–14 days. Ensure good drainage by raising beds or adding sand. Overwatering is the main risk to avoid.',crops:'Blueberries, heathers, brassicas, root vegetables'},
-  {id:'chalk',name:'Chalky Soil',tag:'Alkaline Soil',emoji:'⬜',bg:'#D4C9A8',idealMin:20,idealMax:40,desc:'Chalky soil is alkaline, stony, and free-draining. It has high calcium carbonate content, which limits the availability of certain nutrients. It tends to be shallow and dries out rapidly.',facts:['High pH (above 7.5) — alkaline soil','Free draining — dries out quickly','Stony and often shallow','Limits availability of iron, manganese','Needs regular addition of organic matter'],irr:'Chalky soil needs frequent watering as it drains rapidly. In hot weather, water every 2–4 days. Add organic matter (compost) to improve water retention. Mulching is especially beneficial for chalk soils.',crops:'Brassicas, spinach, asparagus, beech trees'},
-  {id:'saline',name:'Saline Soil',tag:'Salt Soil',emoji:'🔵',bg:'#5A7FA0',idealMin:10,idealMax:30,desc:'Saline soils have a high concentration of soluble salts, which inhibit plant growth by reducing water uptake. Common in arid and semi-arid regions, they require special management to cultivate.',facts:['High electrical conductivity (salt content)','Reduces plant water uptake — causes "physiological drought"','Often found in irrigated farmlands','White salt crust visible on surface','Requires leaching and drainage to improve'],irr:'Saline soils need careful irrigation management. Use flood irrigation or drip systems to leach salts downward. Water deeply and ensure proper drainage. Avoid using saline water sources. Maintain moisture at 25–35% to dilute salts.',crops:'Barley, cotton, sugar beet, date palm'},
-  {id:'laterite',name:'Laterite Soil',tag:'Tropical Soil',emoji:'🔴',bg:'#A03020',idealMin:25,idealMax:50,desc:'Laterite soil is rich in iron and aluminium oxides, giving it a distinctive reddish-brown colour. Formed under tropical conditions, it is hard when dry but becomes soft and crumbly when moist.',facts:['Rich in iron oxides — reddish colour','Poor in nutrients due to heavy leaching','Hardens to brick-like consistency when dry','Common in tropical/sub-tropical regions','Can be improved with organic matter'],irr:'Laterite soils dry out and harden quickly. Maintain consistent moisture levels by watering every 3–5 days. Add compost or green manure to improve water retention. Mulching is very effective in preventing rapid surface drying.',crops:'Cashew, tapioca, coconut, rubber, tea'}
+  {
+    id:'alluvial',name:'Alluvial Soil',tag:'River Soil',emoji:'🟤',bg:'#8B6914',
+    idealMin:40,idealMax:60,
+    desc:'Highly fertile soil deposited by rivers. Rich in minerals, nutrients and organic matter. Found mainly in river plains and deltas. Most widely cultivated soil in India.',
+    facts:['Most fertile soil type','Found in river plains and deltas','Rich in potash, phosphoric acid and lime','Light to medium texture','Excellent for agriculture'],
+    irr:'Water every 5-7 days. Alluvial soil has good water retention. Ensure proper drainage to avoid waterlogging. Drip irrigation works best for this soil type.',
+    crops:'Rice, Wheat, Sugarcane, Cotton, Jute, Maize',
+    found:'Indo-Gangetic plain, river deltas, coastal areas'
+  },
+  {
+    id:'black',name:'Black Soil',tag:'Cotton Soil',emoji:'⚫',bg:'#2C2C2C',
+    idealMin:30,idealMax:50,
+    desc:'Dark clay soil also known as Black Cotton Soil or Regur. High water retention and rich in calcium, magnesium and iron. Ideal for growing cotton.',
+    facts:['High water retention capacity','Rich in calcium and magnesium','Swells when wet, cracks when dry','Self-ploughing due to expansion','Low in nitrogen and phosphorus'],
+    irr:'Water deeply but infrequently every 7-10 days. Black soil retains moisture well. Avoid overwatering as it becomes sticky and unworkable. Monitor cracks as indicator of dryness.',
+    crops:'Cotton, Soybean, Wheat, Jowar, Sunflower, Tobacco',
+    found:'Deccan plateau, Maharashtra, Gujarat, Madhya Pradesh'
+  },
+  {
+    id:'red',name:'Red Soil',tag:'Iron Rich',emoji:'🔴',bg:'#A03020',
+    idealMin:20,idealMax:40,
+    desc:'Iron-rich reddish colored soil. Well drained but generally low in nutrients and organic matter. Gets its red color from iron oxide content.',
+    facts:['Red color due to iron oxide','Well drained and porous','Low in nitrogen, phosphorus and organic matter','Becomes yellow in lower layers','Needs fertilizers for good yield'],
+    irr:'Water every 3-5 days as red soil drains quickly. Use drip irrigation for efficiency. Add organic matter to improve water retention. Mulching helps prevent rapid moisture loss.',
+    crops:'Groundnut, Tobacco, Millets, Potato, Rice, Wheat',
+    found:'Eastern and southern Deccan plateau, Tamil Nadu, Odisha'
+  },
+  {
+    id:'clay',name:'Clay Soil',tag:'Heavy Soil',emoji:'🟤',bg:'#6B4C11',
+    idealMin:50,idealMax:70,
+    desc:'Heavy soil with very fine particles. Excellent nutrient content but poor drainage. Sticky when wet and hard when dry. Requires careful water management.',
+    facts:['Holds nutrients very well','Slow draining — prone to waterlogging','Very sticky and plastic when wet','Cracks and becomes hard when dry','Warms up slowly in spring'],
+    irr:'Water deeply but infrequently every 7-10 days. Allow top 5-10cm to dry between waterings. Avoid light frequent watering. Ensure good drainage to prevent waterlogging.',
+    crops:'Rice, Lettuce, Cabbage, Broccoli, Chard, Beans',
+    found:'River valleys, flood plains, low-lying areas'
+  },
+  {
+    id:'laterite',name:'Laterite Soil',tag:'Tropical Soil',emoji:'🟠',bg:'#C45E2A',
+    idealMin:35,idealMax:55,
+    desc:'Formed in tropical regions with high rainfall. Rich in iron and aluminum oxides giving reddish color. Soft when wet, very hard when dry. Low in fertility.',
+    facts:['Rich in iron oxides — reddish color','Poor in nutrients due to heavy leaching','Hardens to brick-like consistency when dry','Common in tropical regions','Needs heavy fertilization'],
+    irr:'Water every 3-5 days. Laterite dries and hardens quickly. Add compost to improve water retention. Mulching is very effective. Maintain consistent moisture to prevent hardening.',
+    crops:'Tea, Coffee, Cashew, Coconut, Rubber, Pineapple',
+    found:'Karnataka, Kerala, Tamil Nadu, Assam, Meghalaya'
+  },
+  {
+    id:'loam',name:'Loam Soil',tag:'Ideal Soil',emoji:'🟫',bg:'#7B5E3A',
+    idealMin:40,idealMax:60,
+    desc:'Ideal mix of sand, silt and clay. Best soil for farming with excellent drainage and water retention balance. Rich in organic matter and nutrients.',
+    facts:['Best balance of drainage and moisture','Rich in nutrients and organic matter','Easy to work with','Great aeration for root development','Supports widest variety of crops'],
+    irr:'Easiest soil to manage. Water every 4-6 days when top 2-3cm is dry. Deep infrequent watering encourages deep root systems. Rarely needs special treatment.',
+    crops:'Almost all crops — Wheat, Corn, Vegetables, Fruits',
+    found:'Agricultural plains, temperate regions worldwide'
+  },
+  {
+    id:'arid',name:'Arid Soil',tag:'Desert Soil',emoji:'🏜️',bg:'#C8A850',
+    idealMin:10,idealMax:25,
+    desc:'Dry desert soil with very low organic matter and high salt content. Found in arid and semi-arid regions. Requires heavy irrigation and management.',
+    facts:['Very low organic matter','High salt content','Sandy texture and porous','Low water retention','Needs heavy fertilization and irrigation'],
+    irr:'Needs frequent irrigation every 2-3 days. Use drip irrigation for water efficiency. Add organic matter regularly. Mulching essential to prevent evaporation. Avoid flood irrigation.',
+    crops:'Millets, Barley, Cotton, Dates, Drought-resistant crops',
+    found:'Rajasthan, Gujarat desert regions, arid zones'
+  },
+  {
+    id:'mountain',name:'Mountain Soil',tag:'Forest Soil',emoji:'⛰️',bg:'#4A6741',
+    idealMin:50,idealMax:70,
+    desc:'Found in hilly and mountainous areas. Acidic in nature and rich in organic matter but shallow in depth. Prone to erosion on steep slopes.',
+    facts:['Acidic pH (4.5-6.0)','Rich in humus and organic matter','Shallow depth — limited for farming','Prone to soil erosion','Good for forest crops and fruits'],
+    irr:'Water carefully every 3-4 days. Mountain soil has good moisture from rainfall. Avoid overwatering on slopes to prevent erosion. Terrace farming helps retain water and soil.',
+    crops:'Tea, Coffee, Fruits, Potatoes, Medicinal plants, Spices',
+    found:'Himalayas, Western Ghats, Northeastern hills'
+  },
+  {
+    id:'yellow',name:'Yellow Soil',tag:'Humid Soil',emoji:'🟡',bg:'#C8A030',
+    idealMin:35,idealMax:55,
+    desc:'Yellow colored due to iron oxidation in hydrated form. Found in humid regions with moderate rainfall. Moderate fertility and good drainage properties.',
+    facts:['Yellow due to hydrated iron oxide','Moderate fertility','Good drainage properties','Found in humid regions','Needs organic matter addition'],
+    irr:'Water every 4-6 days. Yellow soil has moderate water retention. Add organic matter to improve fertility. Monitor moisture regularly especially in dry seasons.',
+    crops:'Rice, Sweet Potato, Corn, Tobacco, Groundnut',
+    found:'Humid subtropical regions, parts of South and East India'
+  },
+  {
+    id:'cinder',name:'Cinder Soil',tag:'Volcanic Soil',emoji:'🌋',bg:'#3A3A3A',
+    idealMin:25,idealMax:45,
+    desc:'Volcanic origin soil with excellent drainage. Rich in minerals but low in organic matter. Formed from volcanic ash and cinders. Unique texture and composition.',
+    facts:['Volcanic origin — rich in minerals','Excellent drainage','Low in organic matter','Unique porous structure','Good aeration for roots'],
+    irr:'Water every 2-3 days due to fast drainage. Add compost to improve water retention. Drip irrigation is most efficient. Mulching helps retain moisture significantly.',
+    crops:'Grapes, Olives, Lavender, Herbs, Succulents, Cacti',
+    found:'Volcanic regions, parts of Deccan plateau'
+  }
 ];

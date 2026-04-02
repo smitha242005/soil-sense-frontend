@@ -82,14 +82,25 @@
   .result-content { display: none; }
   .result-content.show { display: block; }
 
-  .moisture-badge {
+  .loading-state { display: none; text-align: center; padding: 2rem; }
+  .loading-state.show { display: block; }
+  .spinner {
+    width: 44px; height: 44px;
+    border: 3px solid rgba(160,82,45,0.2);
+    border-top-color: var(--soil-warm);
+    border-radius: 50%; animation: spin 0.9s linear infinite;
+    margin: 0 auto 1rem;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── NEW SOIL TYPE RESULT STYLES ── */
+  .soil-type-badge {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 8px 20px; border-radius: 50px;
-    font-weight: 600; font-size: 1rem; margin-bottom: 1.5rem;
+    font-weight: 600; font-size: 1rem; margin-bottom: 1.2rem;
+    background: var(--soil-pale); color: var(--soil-dark);
+    border: 1.5px solid rgba(160,82,45,0.2);
   }
-  .badge-dry { background: var(--dry-light); color: var(--dry-orange); }
-  .badge-moderate { background: var(--moderate-light); color: #E65100; }
-  .badge-wet { background: var(--wet-light); color: var(--wet-blue); }
 
   .result-metric {
     display: flex; justify-content: space-between; align-items: center;
@@ -109,24 +120,56 @@
     transition: width 1s ease;
   }
 
-  .recommendation-box {
-    margin-top: 1.5rem; padding: 1.2rem;
+  .soil-info-box {
+    margin-top: 1.2rem; padding: 1.2rem;
     border-radius: var(--radius-sm);
-    border-left: 4px solid;
+    background: var(--soil-pale);
+    border-left: 4px solid var(--soil-warm);
   }
-  .rec-warn { background: #FFF3E0; border-color: #FF6D00; }
-  .rec-ok { background: #E8F5E9; border-color: var(--green-mid); }
-  .rec-monitor { background: #E3F2FD; border-color: var(--wet-blue); }
-  .rec-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
-  .rec-text { font-size: 0.85rem; color: var(--text-mid); line-height: 1.5; }
+  .soil-info-box h4 {
+    font-size: 0.9rem; color: var(--soil-dark);
+    margin-bottom: 0.5rem; font-weight: 600;
+  }
+  .soil-info-box p {
+    font-size: 0.83rem; color: var(--text-mid);
+    line-height: 1.6; margin-bottom: 0.8rem;
+  }
 
-  .loading-state { display: none; text-align: center; padding: 2rem; }
-  .loading-state.show { display: block; }
-  .spinner {
-    width: 44px; height: 44px;
-    border: 3px solid rgba(160,82,45,0.2);
-    border-top-color: var(--soil-warm);
-    border-radius: 50%; animation: spin 0.9s linear infinite;
-    margin: 0 auto 1rem;
+  .crops-list {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;
   }
-  @keyframes spin { to { transform: rotate(360deg); } }
+  .crop-tag {
+    background: #E8F5E9; color: #2E7D32;
+    padding: 4px 10px; border-radius: 50px;
+    font-size: 0.75rem; font-weight: 500;
+  }
+
+  .moisture-info {
+    display: flex; align-items: center; gap: 8px;
+    background: #E3F2FD; padding: 10px 14px;
+    border-radius: var(--radius-sm); margin-top: 8px;
+  }
+  .moisture-info span { font-size: 0.85rem; color: #1565C0; font-weight: 500; }
+
+  .top3-section { margin-top: 1.2rem; }
+  .top3-section h4 {
+    font-size: 0.85rem; color: var(--text-light);
+    margin-bottom: 0.8rem; font-weight: 500;
+  }
+  .top3-item {
+    display: flex; justify-content: space-between;
+    align-items: center; padding: 6px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    font-size: 0.83rem;
+  }
+  .top3-item:last-child { border-bottom: none; }
+  .top3-name { color: var(--soil-dark); font-weight: 500; }
+  .top3-conf { color: var(--text-light); }
+  .top3-bar-wrap {
+    width: 80px; height: 5px;
+    background: #F0EBE3; border-radius: 50px; overflow: hidden;
+  }
+  .top3-bar {
+    height: 100%; border-radius: 50px;
+    background: var(--soil-warm);
+  }
