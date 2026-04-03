@@ -1,6 +1,4 @@
 window.addEventListener('DOMContentLoaded', () => {
-  // Hide all pages first
-  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
   renderSoilGrid();
   const session = getSession();
   if (session) {
