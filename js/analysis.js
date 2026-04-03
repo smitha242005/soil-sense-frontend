@@ -71,6 +71,14 @@ async function runAnalysis() {
   document.getElementById('result-content').classList.remove('show');
   document.getElementById('loading-state').classList.add('show');
 
+  // Auto scroll to loading state
+  setTimeout(() => {
+    document.getElementById('loading-state').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }, 100);
+
   try {
     const base64 = await new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -169,4 +177,12 @@ function showResult(data, imgSrc) {
   }
 
   document.getElementById('result-content').classList.add('show');
+
+  // ── Auto scroll to results ──
+  setTimeout(() => {
+    document.getElementById('result-content').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }, 300);
 }

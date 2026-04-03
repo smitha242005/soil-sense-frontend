@@ -27,7 +27,7 @@ function doLogin() {
   if (!users[email] || users[email].pass !== pass) {
     msg.textContent='Incorrect email or password.'; msg.className='auth-msg error'; return;
   }
-  msg.textContent = ''; // Clear error message on successful login
+  msg.textContent = '';
   setSession(users[email]);
   document.getElementById('nav-avatar').textContent = users[email].name.charAt(0).toUpperCase();
   document.getElementById('main-nav').classList.add('visible');
@@ -40,3 +40,13 @@ function logout() {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('auth-page').classList.add('active');
 }
+
+// Auto-login if session exists
+window.addEventListener('DOMContentLoaded', () => {
+  const session = getSession();
+  if (session) {
+    document.getElementById('nav-avatar').textContent = session.name.charAt(0).toUpperCase();
+    document.getElementById('main-nav').classList.add('visible');
+    showPage('home');
+  }
+});
