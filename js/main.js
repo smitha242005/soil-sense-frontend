@@ -1,3 +1,4 @@
+// v2
 window.addEventListener('DOMContentLoaded', () => {
   renderSoilGrid();
   const session = getSession();
