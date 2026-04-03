@@ -88,5 +88,68 @@ const soils = [
     irr:'Water every 2-3 days due to fast drainage. Add compost to improve water retention. Drip irrigation is most efficient. Mulching helps retain moisture significantly.',
     crops:'Grapes, Olives, Lavender, Herbs, Succulents, Cacti',
     found:'Volcanic regions, parts of Deccan plateau'
+  },
+  {
+    id:'sandy',name:'Sandy Soil',tag:'Light Soil',emoji:'🏖️',bg:'#D4B483',
+    idealMin:15,idealMax:30,
+    desc:'Light, coarse-grained soil with large particles. Drains very quickly and warms up fast in spring. Low in nutrients but easy to work with.',
+    facts:['Very fast drainage','Low water retention','Warms up quickly in spring','Low in nutrients','Easy to cultivate and work with'],
+    irr:'Water frequently every 1-2 days as sandy soil drains very fast. Use drip irrigation for best efficiency. Add organic matter and mulch heavily to retain moisture.',
+    crops:'Carrots, Potatoes, Peanuts, Watermelon, Herbs',
+    found:'Coastal areas, desert fringes, river banks worldwide'
+  },
+  {
+    id:'chalky',name:'Chalky Soil',tag:'Alkaline Soil',emoji:'⬜',bg:'#C8C0A8',
+    idealMin:25,idealMax:45,
+    desc:'Alkaline soil containing calcium carbonate or lime. Often shallow and stony. Free draining and can be very dry in summer. Limits which plants can grow.',
+    facts:['High pH — alkaline nature','Contains calcium carbonate','Free draining and dry in summer','Can cause nutrient deficiencies','Limits plant selection'],
+    irr:'Water every 3-4 days. Chalky soil drains freely. Add acidic organic matter to balance pH. Use acid-loving plant fertilizers. Mulching helps retain moisture in summer.',
+    crops:'Lavender, Spinach, Beets, Sweet Corn, Cabbage',
+    found:'Chalk downlands, limestone areas, parts of Europe and Middle East'
+  },
+  {
+    id:'peaty',name:'Peaty Soil',tag:'Bog Soil',emoji:'🟫',bg:'#5C4033',
+    idealMin:55,idealMax:75,
+    desc:'Dark, spongy soil rich in organic matter formed from decomposed plant material. Holds large amounts of water. Found in boggy and marshy areas.',
+    facts:['Very high organic matter content','Excellent water retention','Acidic in nature','Dark brown to black color','Spongy and compressible texture'],
+    irr:'Rarely needs irrigation — retains water naturally. Ensure good drainage to prevent waterlogging. Add lime to reduce acidity if needed. Best suited for moisture-loving plants.',
+    crops:'Blueberries, Cranberries, Heathers, Rhododendrons, Sedges',
+    found:'Bogs, marshes, fenlands, Scotland, Ireland, parts of India'
+  },
+  {
+    id:'silt',name:'Silt Soil',tag:'Smooth Soil',emoji:'🌊',bg:'#8B9E7A',
+    idealMin:35,idealMax:55,
+    desc:'Fine-grained fertile soil with smooth texture. Better water retention than sandy soil. Can become compacted easily. Found near rivers and lakes.',
+    facts:['Fine smooth texture','Good water retention','Fertile and nutrient-rich','Can become compacted easily','Prone to erosion by water'],
+    irr:'Water every 4-5 days. Silt retains moisture well. Avoid overwatering as it compacts easily. Add organic matter to improve structure. Avoid walking on wet silt soil.',
+    crops:'Wheat, Rice, Vegetables, Fruits, Sugar Beet',
+    found:'River banks, floodplains, lake shores worldwide'
+  },
+  {
+    id:'saline',name:'Saline Soil',tag:'Salt Soil',emoji:'🧂',bg:'#B8A898',
+    idealMin:20,idealMax:40,
+    desc:'Soil with high concentration of soluble salts. Harmful to most plants as it prevents water absorption. Found in arid regions and coastal areas.',
+    facts:['High salt concentration','Harmful to most plants','White salt crust on surface','Poor water absorption by plants','Needs special management'],
+    irr:'Use fresh water irrigation to leach out salts. Water deeply and infrequently. Ensure excellent drainage. Add gypsum to improve soil structure. Grow only salt-tolerant crops.',
+    crops:'Barley, Sugar Beet, Cotton, Mangroves, Salt-tolerant grasses',
+    found:'Coastal areas, arid regions, irrigated farmlands'
+  },
+  {
+    id:'chalk',name:'Chalk Soil',tag:'Limestone Soil',emoji:'🪨',bg:'#D4CFC0',
+    idealMin:20,idealMax:40,
+    desc:'Soil formed over chalk or limestone bedrock. Very alkaline with high calcium content. Thin and free draining. Can be challenging for many plants.',
+    facts:['High calcium content','Very alkaline pH 7.5-8.5','Thin and shallow','Free draining','Limits nutrient availability'],
+    irr:'Water every 3-5 days. Chalk soil drains rapidly. Add organic matter to improve water retention. Use acid fertilizers to balance pH. Mulch heavily to retain moisture.',
+    crops:'Beech, Ash, Travellers Joy, Salad Burnet, Wild Thyme',
+    found:'Chalk downlands of England, limestone regions of Europe'
+  },
+  {
+    id:'forest',name:'Forest Soil',tag:'Woodland Soil',emoji:'🌲',bg:'#3D5C2E',
+    idealMin:45,idealMax:65,
+    desc:'Rich dark soil found under forest cover. Loaded with organic matter from fallen leaves and decomposing plant material. Excellent structure and fertility.',
+    facts:['Very rich in organic matter','Excellent soil structure','High biological activity','Dark brown to black color','Self-replenishing through leaf litter'],
+    irr:'Water every 4-5 days. Forest soil retains moisture well due to high organic content. Mulch with leaf litter to mimic natural conditions. Avoid compaction by heavy machinery.',
+    crops:'Mushrooms, Berries, Medicinal herbs, Shade vegetables, Ginseng',
+    found:'Temperate forests, tropical rainforests, woodland areas worldwide'
   }
 ];
