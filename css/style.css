@@ -88,5 +88,5 @@
   .btn-logout:hover { background: var(--dry-light); color: var(--dry-orange); border-color: var(--dry-orange); }
 
   /* ─── PAGES ─── */
-  .page { display: none; min-height: 100vh; }
-  .page.active { display: block; }
+.page { display: none !important; min-height: 100vh; }
+.page.active { display: block !important; }

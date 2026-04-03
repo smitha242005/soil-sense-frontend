@@ -1,3 +1,6 @@
+// Hide all pages immediately
+document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+
 window.addEventListener('DOMContentLoaded', () => {
   renderSoilGrid();
   const session = getSession();
