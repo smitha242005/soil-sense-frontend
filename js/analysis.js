@@ -63,7 +63,7 @@ const BACKEND_URL = 'https://soilsense-backend-api.onrender.com';
 
 async function runAnalysis() {
   if (!currentFile) {
-    alert('Please upload an image first!');
+    alert(currentLang === 'ta' ? 'முதலில் படத்தை பதிவேற்றவும்!' : 'Please upload an image first!');
     return;
   }
 
@@ -71,7 +71,6 @@ async function runAnalysis() {
   document.getElementById('result-content').classList.remove('show');
   document.getElementById('loading-state').classList.add('show');
 
-  // Auto scroll to loading state
   setTimeout(() => {
     document.getElementById('loading-state').scrollIntoView({
       behavior: 'smooth',
@@ -104,7 +103,7 @@ async function runAnalysis() {
     }
   } catch (err) {
     console.error('API error:', err);
-    alert('Analysis failed. Please try again.');
+    alert(currentLang === 'ta' ? 'பகுப்பாய்வு தோல்வியடைந்தது. மீண்டும் முயற்சிக்கவும்.' : 'Analysis failed. Please try again.');
     document.getElementById('loading-state').classList.remove('show');
     document.getElementById('result-placeholder').style.display = 'block';
   }
@@ -114,17 +113,30 @@ function showResult(data, imgSrc) {
   document.getElementById('loading-state').classList.remove('show');
   document.getElementById('result-thumb').src = imgSrc;
 
+  // ── Get Tamil soil info if Tamil is selected ──
+  const soilTa = currentLang === 'ta' &&
+    translations.ta.soilInfo &&
+    translations.ta.soilInfo[data.soil_type];
+
   // ── Soil Type Badge ──
   document.getElementById('res-soil-type').textContent =
-    '🌱 ' + data.display_name;
+    '🌱 ' + (soilTa ? soilTa.display_name : data.display_name);
 
-  // ── Metrics ──
+  // ── Confidence ──
   document.getElementById('res-confidence').textContent =
-    data.confidence + '% confident';
-  document.getElementById('res-moisture').textContent =
-    data.moisture_level;
+    data.confidence + (currentLang === 'ta' ? '% நம்பகத்தன்மை' : '% confident');
+
+  // ── Moisture Level ──
+  const moistureText = currentLang === 'ta' &&
+    translations.ta.moistureLevels &&
+    translations.ta.moistureLevels[data.moisture_level]
+    ? translations.ta.moistureLevels[data.moisture_level]
+    : data.moisture_level;
+  document.getElementById('res-moisture').textContent = moistureText;
+
+  // ── Found In ──
   document.getElementById('res-found').textContent =
-    data.found_in;
+    soilTa ? soilTa.found_in : data.found_in;
 
   // ── Confidence Bar ──
   setTimeout(() => {
@@ -132,16 +144,18 @@ function showResult(data, imgSrc) {
   }, 100);
 
   // ── Description ──
-  document.getElementById('res-description').textContent = data.description;
+  document.getElementById('res-description').textContent =
+    soilTa ? soilTa.description : data.description;
 
   // ── Characteristics ──
   document.getElementById('res-characteristics').textContent =
-    data.characteristics;
+    soilTa ? soilTa.characteristics : data.characteristics;
 
   // ── Crops ──
   const cropsContainer = document.getElementById('res-crops');
   cropsContainer.innerHTML = '';
-  data.crops.forEach(crop => {
+  const crops = soilTa ? soilTa.crops : data.crops;
+  crops.forEach(crop => {
     const tag = document.createElement('span');
     tag.className = 'crop-tag';
     tag.textContent = crop;
@@ -152,6 +166,11 @@ function showResult(data, imgSrc) {
   const top3Container = document.getElementById('res-top3');
   top3Container.innerHTML = '';
   data.top3.forEach(item => {
+    const soilName = currentLang === 'ta' &&
+      translations.ta.soilInfo &&
+      translations.ta.soilInfo[data.top3.find(x => x.soil === item.soil)?.soil_type]
+      ? translations.ta.soilInfo[data.top3.find(x => x.soil === item.soil)?.soil_type].display_name
+      : item.soil;
     top3Container.innerHTML += `
       <div class="top3-item">
         <span class="top3-name">${item.soil}</span>
