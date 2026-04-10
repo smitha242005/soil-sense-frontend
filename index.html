@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SoilSense – Smart Soil Type Analyser</title>
+  <meta name="theme-color" content="#A0522D">
+  <meta name="description" content="AI-powered soil type identification and crop recommendations">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="soilsense_backend/assests/images/icons/icon-192.png">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/auth.css">
@@ -29,6 +33,13 @@
     <button onclick="showPage('guide')" id="nav-guide">Soil Guide</button>
   </div>
   <div class="nav-right">
+    <button id="lang-toggle" onclick="setLanguage(currentLang === 'en' ? 'ta' : 'en')"
+      style="background:var(--soil-pale);border:1.5px solid rgba(160,82,45,0.3);
+      padding:6px 14px;border-radius:50px;cursor:pointer;
+      font-family:'DM Sans',sans-serif;font-size:0.85rem;
+      color:var(--soil-dark);font-weight:500;">
+      தமிழ்
+    </button>
     <div class="nav-user" id="nav-avatar">U</div>
     <button class="btn-logout" onclick="logout()">Sign Out</button>
   </div>
@@ -119,7 +130,7 @@
       <div class="feature-card">
         <div class="feature-icon" style="background:#F3E5F5">📚</div>
         <h3>Soil Knowledge Guide</h3>
-        <p>Browse 10 soil types with characteristics, ideal moisture ranges, care tips and agricultural guidance.</p>
+        <p>Browse 17 soil types with characteristics, ideal moisture ranges, care tips and agricultural guidance.</p>
       </div>
     </div>
   </div>
@@ -324,9 +335,17 @@
 <script src="js/router.js"></script>
 <script src="js/soil-data.js"></script>
 <script src="js/soil-guide.js"></script>
+<script src="js/translations.js"></script>
 <script src="js/analysis.js"></script>
 <script src="js/main.js"></script>
-<script src="js/translations.js"></script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/soilsense-frontend/service-worker.js')
+      .then(() => console.log('✅ Service Worker registered!'))
+      .catch(err => console.log('SW error:', err));
+  }
+</script>
 
 </body>
 </html>
