@@ -1,20 +1,21 @@
 const CACHE_NAME = 'soilsense-v1';
 const urlsToCache = [
-  '/soilsense-frontend/',
-  '/soilsense-frontend/index.html',
-  '/soilsense-frontend/css/style.css',
-  '/soilsense-frontend/css/auth.css',
-  '/soilsense-frontend/css/home.css',
-  '/soilsense-frontend/css/analysis.css',
-  '/soilsense-frontend/css/guide.css',
-  '/soilsense-frontend/css/media.css',
-  '/soilsense-frontend/js/storage.js',
-  '/soilsense-frontend/js/auth.js',
-  '/soilsense-frontend/js/router.js',
-  '/soilsense-frontend/js/soil-data.js',
-  '/soilsense-frontend/js/soil-guide.js',
-  '/soilsense-frontend/js/analysis.js',
-  '/soilsense-frontend/js/main.js'
+  '/soil-sense-frontend/',
+  '/soil-sense-frontend/index.html',
+  '/soil-sense-frontend/css/style.css',
+  '/soil-sense-frontend/css/auth.css',
+  '/soil-sense-frontend/css/home.css',
+  '/soil-sense-frontend/css/analysis.css',
+  '/soil-sense-frontend/css/guide.css',
+  '/soil-sense-frontend/css/media.css',
+  '/soil-sense-frontend/js/storage.js',
+  '/soil-sense-frontend/js/auth.js',
+  '/soil-sense-frontend/js/router.js',
+  '/soil-sense-frontend/js/soil-data.js',
+  '/soil-sense-frontend/js/soil-guide.js',
+  '/soil-sense-frontend/js/translations.js',
+  '/soil-sense-frontend/js/analysis.js',
+  '/soil-sense-frontend/js/main.js'
 ];
 
 self.addEventListener('install', event => {

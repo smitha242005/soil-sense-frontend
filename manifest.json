@@ -2,7 +2,7 @@
   "name": "SoilSense - Smart Soil Analyser",
   "short_name": "SoilSense",
   "description": "AI-powered soil type identification and crop recommendations",
-  "start_url": "/soilsense-frontend/",
+  "start_url": "/soil-sense-frontend/",
   "display": "standalone",
   "background_color": "#3B2507",
   "theme_color": "#A0522D",
