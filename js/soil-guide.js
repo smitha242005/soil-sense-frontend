@@ -170,6 +170,21 @@ function showSoilDetail(id) {
   if (!s) return;
   const ta = currentLang === 'ta' && soilsTa[id];
   const t = translations[currentLang];
+  // Fix labels after render
+  const backBtn = document.querySelector('.btn-back');
+  if (backBtn) backBtn.textContent = t.backBtn;
+  
+  const moistureH3 = document.querySelector('.moisture-range-visual h3');
+  if (moistureH3) moistureH3.textContent = t.idealMoistureRange;
+  
+  const aboutH3 = document.getElementById('detail-desc-title');
+  if (aboutH3) aboutH3.textContent = t.aboutThisSoil;
+  
+  const charH3 = document.querySelectorAll('.info-section h3')[1];
+  if (charH3) charH3.textContent = t.keyCharacteristics;
+  
+  const irrigH3 = document.querySelector('#detail-irrigation h3');
+  if (irrigH3) irrigH3.textContent = t.irrigationGuide;
 
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('soil-detail-page').classList.add('active');
