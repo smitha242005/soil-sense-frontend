@@ -189,7 +189,20 @@ function showSoilDetail(id) {
   document.getElementById('detail-name').textContent = name;
   document.getElementById('detail-desc').textContent = desc;
   document.getElementById('detail-desc-title').textContent =
-    currentLang === 'ta' ? ('பற்றி ' + name) : ('About ' + name);
+    currentLang === 'ta' ? t.aboutThisSoil : 'About This Soil';
+
+// Fix remaining labels
+const backBtn = document.querySelector('.btn-back');
+if (backBtn) backBtn.textContent = t.backBtn;
+
+const moistureH3 = document.querySelector('.moisture-range-visual h3');
+if (moistureH3) moistureH3.textContent = t.idealMoistureRange;
+
+const charH3 = document.querySelector('.info-section h3:last-of-type');
+if (charH3) charH3.textContent = t.keyCharacteristics;
+
+const irrigH3 = document.querySelector('#detail-irrigation h3');
+if (irrigH3) irrigH3.textContent = t.irrigationGuide;
   document.getElementById('detail-irr-text').textContent = irr;
   document.getElementById('detail-list').innerHTML = facts.map(f => `<li>${f}</li>`).join('');
 
